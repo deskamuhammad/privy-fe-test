@@ -8,6 +8,8 @@
   "author": "Deska Muhammad Faisal <deska.faisal@gmail.com>",
   "private": true,
   "scripts": {
+    "dev": "QENV=development quasar dev",
+    "dev-ssr": "QENV=development quasar dev -m ssr",
     "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0"
   },
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",
+    "@quasar/quasar-app-extension-qenv": "^1.0.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.10.0",

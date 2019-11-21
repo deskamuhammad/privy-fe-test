@@ -949,6 +949,13 @@
   resolved "https://registry.yarnpkg.com/@quasar/fastclick/-/fastclick-1.1.4.tgz#21ed3e9a4387dcb43022a08af4ef08a5f1abf159"
   integrity sha512-i9wbyV4iT+v4KhtHJynUFhH5LiEPvAEgSnwMqPN4hf/8uRe82nDl5qP5agrp2el1h0HzyBpbvHaW7NB0BPrtvA==
 
+"@quasar/quasar-app-extension-qenv@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-app-extension-qenv/-/quasar-app-extension-qenv-1.0.0.tgz#ee927222468ba42948dad043da97a60e50e2baf9"
+  integrity sha512-FsDmnCaRpFAz5qsysGNBOIx+ehceXlu/Jm4UmudekAKRfhJWtnlkvTJyhjQBSsw97poRr2g/ARL9ZCBKv8ZgqA==
+  dependencies:
+    fs-extra "^8.1.0"
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
@@ -3751,7 +3758,7 @@ from2@^2.1.0:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
 
-fs-extra@8.1.0:
+fs-extra@8.1.0, fs-extra@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-8.1.0.tgz#49d43c45a88cd9677668cb7be1b46efdb8d2e1c0"
   integrity sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==

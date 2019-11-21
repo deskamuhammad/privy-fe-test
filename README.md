@@ -33,10 +33,10 @@ $ git clone git@github.com:deskamuhammad/privy-fe-test.git
 $ cd privy-fe-test
 
 # serve with hot reload at localhost:8080 by default.
-$ quasar dev
+$ yarn dev
 
 # or you can serve with server side rendering (ssr)
-$ quasar dev -m ssr
+$ yarn dev-ssr
 ```
 
 ### Build the app for production
