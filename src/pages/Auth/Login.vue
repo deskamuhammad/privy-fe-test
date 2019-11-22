@@ -7,7 +7,7 @@
       </q-card-section>
 
       <q-card-section class="q-mt-xl">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSubmit" class="q-gutter-md">
           <q-input
             v-model="data.phone"
             label="Phone *"
@@ -60,17 +60,10 @@
             </template>
           </q-input>
           <div align="right">
-            <q-btn
-              label="Reset"
-              type="reset"
-              color="primary"
-              flat
-              class="q-ml-sm"
-            />
-            <q-btn label="Submit" type="submit" color="primary" />
+            <q-btn label="Login" type="submit" color="primary" />
           </div>
           <div align="left">
-            Already have account? <router-link :to="{ name: 'login' }" title="Login"><span class="text-primary">Sign in</span></router-link>
+            Need an account? <router-link :to="{ name: 'register' }" title="Login"><span class="text-primary">Sign up</span></router-link>
           </div>
         </q-form>
       </q-card-section>
@@ -80,7 +73,7 @@
 
 <script>
 export default {
-  name: 'PageRegister',
+  name: 'PageLogin',
   data () {
     return {
       data: {
@@ -89,25 +82,17 @@ export default {
         country: null,
         latlong: null,
         device_token: 'xxxxxxxxxxxxx', // Not setup firebase yet :)
-        device_type: 2
+        device_type: 0
       },
       isPwd: true
     }
   },
   methods: {
-    async onSubmit () {
-      this.$store.dispatch('auth/register', this.data)
-        .then(() => this.$router.push('/otp'))
-    },
-    onReset () {
-      this.data = {
-        phone: null,
-        password: null,
-        country: null,
-        latlong: null,
-        device_token: 'xxxxxxxxxxxxx',
-        device_type: 2
-      }
+    onSubmit () {
+      this.$store.dispatch('auth/login', this.data)
+        .then((res) =>
+          // this.$q.cookies.set('auth-token', res),
+          this.$router.push('/home'))
     }
   }
 }

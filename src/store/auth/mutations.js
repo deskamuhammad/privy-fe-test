@@ -27,3 +27,13 @@ export const RESEND_OTP_SUCCESS = (state, response) => {
 export const RESEND_OTP_FAILURE = (state) => {
   state.user.phone = null
 }
+
+export const LOGIN_REQUEST = (state, data) => {
+  state.user = data
+}
+export const LOGIN_SUCCESS = (state, response) => {
+  state.user = response.data.user
+}
+export const LOGIN_FAILURE = (state) => {
+  state.user = null
+}

@@ -45,6 +45,7 @@ export default {
     handleOnComplete (value) {
       const userId = this.$store.getters['auth/userId']
       this.$store.dispatch('auth/otp', { user_id: userId, otp_code: value })
+        .then(() => this.$router.push('/home'))
     },
     resend () {
       this.$q.dialog({

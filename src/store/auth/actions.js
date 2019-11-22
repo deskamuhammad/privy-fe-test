@@ -31,9 +31,22 @@ export function resendOtp ({ commit }, data) {
   return AuthService.resendOtpService(data)
     .then(response => {
       commit('RESEND_OTP_SUCCESS', response)
+      Cookies.set('auth_token', response.data.user)
     })
     .catch(err => {
       commit('RESEND_OTP_FAILURE')
+      throw err
+    })
+}
+
+export function login ({ commit }, data) {
+  commit('LOGIN_REQUEST', data)
+  return AuthService.loginService(data)
+    .then(response => {
+      commit('LOGIN_SUCCESS', response)
+    })
+    .catch(err => {
+      commit('LOGIN_FAILURE')
       throw err
     })
 }
