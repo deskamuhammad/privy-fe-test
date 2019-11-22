@@ -1,19 +1,36 @@
-/* eslint-disable no-console */
-import Vue from 'vue'
 import axios from 'axios'
+import { Cookies } from 'quasar'
 
-const service = axios.create({
+const axiosInstance = axios.create({
   baseURL: '/'
 })
 
-Vue.prototype.$axios = axios
-// response interceptor
-service.interceptors.response.use(
-  response => response.data,
-  error => {
-    console.log('err' + error) // for debug
-    return Promise.reject(error.response)
-  }
-)
+export default function ({ Vue, ssrContext }) {
+  const cookies = process.env.SERVER
+    ? Cookies.parseSSR(ssrContext)
+    : Cookies
 
-export default service
+  // request interceptor
+  axiosInstance.interceptors.request.use(config => {
+    let token = cookies.get('token')
+    if (token) {
+      config.headers.Authorization = `bearer ${token}`
+    }
+    return config
+  }, error => {
+    return Promise.reject(error)
+  })
+
+  // response interceptor
+  axiosInstance.interceptors.response.use(
+    response => response.data,
+    error => {
+      console.log('err' + error) // for debug
+      return Promise.reject(error.response)
+    }
+  )
+
+  Vue.prototype.$axios = axiosInstance
+}
+
+export { axiosInstance }

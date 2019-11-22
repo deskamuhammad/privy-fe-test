@@ -1,16 +1,11 @@
 
 const routes = [
   {
-    path: '*',
-    redirect: {
-      name: 'login'
-    }
-  },
-  {
     path: '/',
     component: () => import('layouts/AuthLayout'),
     children: [
-      { path: '', component: () => import('pages/Auth/Register') }
+      { path: '', component: () => import('pages/Auth/Register') },
+      { path: 'otp', component: () => import('pages/Auth/Otp') }
     ]
   }
 ]

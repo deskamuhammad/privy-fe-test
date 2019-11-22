@@ -1,3 +1,3 @@
-// export function REGISTER (state) {
-//     state.register.
-// }
+export function userId (state) {
+  return state.user.id
+}

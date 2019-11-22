@@ -9,7 +9,8 @@ module.exports = function (ctx) {
     boot: [
       'i18n',
       'axios',
-      'routehelp'
+      'routehelp',
+      'twoDigits'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -48,13 +49,13 @@ module.exports = function (ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: ['Notify', 'LoadingBar'],
+      plugins: ['Notify', 'LoadingBar', 'Dialog', 'Cookies'],
       config: {
         loadingBar: {
           color: 'primary',
           size: '5px',
-          position: 'top',
-          skipHijack: true
+          position: 'top'
+          // skipHijack: true
         },
         notify: {
           position: 'top-right',
