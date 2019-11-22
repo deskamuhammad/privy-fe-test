@@ -8,7 +8,8 @@ module.exports = function (ctx) {
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
     boot: [
       'i18n',
-      'axios'
+      'axios',
+      'routehelp'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -47,7 +48,21 @@ module.exports = function (ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Notify', 'LoadingBar'],
+      config: {
+        loadingBar: {
+          color: 'primary',
+          size: '5px',
+          position: 'top',
+          skipHijack: true
+        },
+        notify: {
+          position: 'top-right',
+          timeout: 2500,
+          textColor: 'white',
+          actions: [{ icon: 'close', color: 'white' }]
+        }
+      }
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
