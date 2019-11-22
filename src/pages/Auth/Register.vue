@@ -76,8 +76,6 @@
 </template>
 
 <script>
-import AuthService from '../../service/AuthService'
-
 export default {
   name: 'PageRegister',
   data () {
@@ -95,19 +93,8 @@ export default {
   },
   methods: {
     async onSubmit () {
-      try {
-        const response = await AuthService.register(this.data)
-        if (response) {
-          // if success redirect to otp page
-          this.$router.push('/auth/otp')
-        }
-      } catch (err) {
-        this.$q.notify({
-          message: err.data.error.errors[0],
-          icon: 'warning',
-          color: 'red'
-        })
-      }
+      this.$store.dispatch('auth/register', this.data)
+        .then(() => this.$router.push('/otp'))
     },
     onReset () {
       this.data = {
