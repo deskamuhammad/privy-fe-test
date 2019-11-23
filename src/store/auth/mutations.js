@@ -29,10 +29,10 @@ export const RESEND_OTP_FAILURE = (state) => {
 }
 
 export const LOGIN_REQUEST = (state, data) => {
-  state.user = data
+  state.token = null
 }
 export const LOGIN_SUCCESS = (state, response) => {
-  state.user = response.data.user
+  state.token = response.data.user
 }
 export const LOGIN_FAILURE = (state) => {
   state.user = null

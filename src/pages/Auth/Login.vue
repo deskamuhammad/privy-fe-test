@@ -3,7 +3,7 @@
   <div class="q-pa-md">
     <q-card class="mycard">
       <q-card-section class="bg-primary text-white">
-        <div class="text-h5">Register Form</div>
+        <div class="text-h5">Login Form</div>
       </q-card-section>
 
       <q-card-section class="q-mt-xl">
@@ -90,9 +90,12 @@ export default {
   methods: {
     onSubmit () {
       this.$store.dispatch('auth/login', this.data)
-        .then((res) =>
-          // this.$q.cookies.set('auth-token', res),
-          this.$router.push('/home'))
+        .then(() => {
+          let token = this.$store.getters['auth/token']
+          this.$q.cookies.set('tokenType', token.token_type)
+          this.$q.cookies.set('tokenAccess', token.access_token)
+          this.$router.push('/home')
+        })
     }
   }
 }

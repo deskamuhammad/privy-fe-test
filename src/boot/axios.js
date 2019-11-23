@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable standard/computed-property-even-spacing */
 import axios from 'axios'
 import { Cookies } from 'quasar'
 
@@ -5,21 +7,26 @@ const axiosInstance = axios.create({
   baseURL: '/'
 })
 
-export default function ({ Vue, ssrContext }) {
-  const cookies = process.env.SERVER
-    ? Cookies.parseSSR(ssrContext)
-    : Cookies
-
+export default function ({ Vue, store, ssrContext }) {
   // request interceptor
-  axiosInstance.interceptors.request.use(config => {
-    let token = cookies.get('token')
-    if (token) {
-      config.headers.Authorization = `bearer ${token}`
-    }
-    return config
-  }, error => {
-    return Promise.reject(error)
-  })
+  axiosInstance.interceptors.request.use(
+    config => {
+      const cookies = process.env.SERVER
+        ? Cookies.parseSSR(ssrContext)
+        : Cookies // otherwise we're on client
+
+      config.headers[{
+        Accept: '*',
+        'Content-Type': 'application/json'
+      }]
+
+      if (cookies.has('tokenAccess')) {
+        config.headers.Authorization = `Bearer ${cookies.get('tokenAccess')}`
+      }
+      return config
+    }, error => {
+      return Promise.reject(error)
+    })
 
   // response interceptor
   axiosInstance.interceptors.response.use(

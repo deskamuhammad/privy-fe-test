@@ -7,5 +7,6 @@ export default {
     device_token: 'xxxxxxxxxxxxx',
     device_type: 2
   },
-  otp: null
+  otp: null,
+  token: null
 }
