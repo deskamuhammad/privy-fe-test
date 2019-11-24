@@ -36,7 +36,26 @@
             }"
           >
             <q-avatar size="150px">
-              <img src="https://cdn.quasar.dev/img/avatar.png">
+              <img v-bind:src="profile.user_picture.picture.url ? profile.user_picture.picture.url : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSfx2lz0ccO8_grKnVibu_ISa6vIZ4cXk02Ld7eoZ3fSMDbGtVV'">
+              <q-btn class="absolute-top-right" color="grey" round glossy unelevated icon="camera_enhance" @click="dialogPropic = true"/>
+              <q-dialog v-model="dialogPropic">
+                <q-card class="bg-white">
+                  <q-bar>
+                    <q-space />
+                    <q-btn dense flat icon="close" v-close-popup>
+                      <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
+                    </q-btn>
+                  </q-bar>
+                  <q-card-section>
+                    <q-uploader
+                      label="Upload profile images"
+                      accept=".jpg, image/*"
+                      :factory="factoryFnProfile"
+                      multiple
+                    />
+                  </q-card-section>
+                </q-card>
+              </q-dialog>
             </q-avatar>
             <div class="q-mt-md text-h3 text-primary text-center">{{ profile.name }}</div>
             <div class="flex flex-center">
@@ -120,6 +139,7 @@ export default {
       openDialogCareer: false,
       openDialogEducation: false,
       dialogCover: false,
+      dialogPropic: false
     }
   },
   computed: {
@@ -159,6 +179,20 @@ export default {
         let formData = new FormData()
         formData.append('image', files[0])
         const response = await uploadService.uploadCoverService(formData)
+        this.loadProfile()
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async factoryFnProfile (files) {
+      try {
+        let formData = new FormData()
+        for (var i = 0; i < files.length; i++) {
+          let file = files[i]
+          formData.append('image', file)
+        }
+        const response = await uploadService.uploadProfileService(formData)
         this.loadProfile()
         console.log(response)
       } catch (err) {

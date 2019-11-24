@@ -11,3 +11,14 @@ export async function uploadCoverService (formData) {
     }
   )
 }
+
+export async function uploadProfileService (formData) {
+  return axiosInstance.post('/api/v1/uploads/profile',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+  )
+}
