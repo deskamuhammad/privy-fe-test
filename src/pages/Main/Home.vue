@@ -1,28 +1,35 @@
 <template>
   <q-page>
     <div v-if="profile">
-      <!-- <q-parallax :height="250" :speed="0.5">
-        <template v-slot:media>
-          <img v-bind:src="profile.cover_picture.url ? profile.cover_picture.url : 'https://www.coverphotosforfb.com/files/covers/1826-sunset.jpg'">
-        </template>
-
-          <div class="profile text-center">
-            <q-avatar size="150px">
-              <img src="https://cdn.quasar.dev/img/avatar.png">
-            </q-avatar>
-        </div>
-      </q-parallax> -->
-
       <q-parallax>
         <template v-slot:media>
           <img v-bind:src="profile.cover_picture.url ? profile.cover_picture.url : 'https://www.solidbackgrounds.com/images/1584x396/1584x396-queen-blue-solid-color-background.jpg'">
         </template>
 
         <template v-slot:content="scope">
+          <div class="q-mt-lg q-mr-lg absolute-top-right">
+            <q-btn color="grey" round glossy unelevated icon="camera_enhance" @click="dialogCover = true"/>
+            <q-dialog v-model="dialogCover">
+              <q-card class="bg-white">
+                <q-bar>
+                  <q-space />
+                  <q-btn dense flat icon="close" v-close-popup>
+                    <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
+                  </q-btn>
+                </q-bar>
+                <q-card-section>
+                  <q-uploader
+                    label="Upload cover image"
+                    accept=".jpg, image/*"
+                    :factory="factoryFnCover"
+                  />
+                </q-card-section>
+              </q-card>
+            </q-dialog>
+          </div>
           <div q-pa-lg
             class="absolute column items-center"
             :style="{
-
               top: (scope.percentScrolled * 60) + '%',
               left: 0,
               right: 0
@@ -94,6 +101,7 @@ import EducationInfo from '../../components/EducationInfo'
 import PostInfoDialog from '../../components/PostInfoDialog'
 import PostCareerDialog from '../../components/PostCareerDialog'
 import PostEducationDialog from '../../components/PostEducationDialog'
+import * as uploadService from '../../service/UploadService'
 
 export default {
   name: 'PageHome',
@@ -110,7 +118,8 @@ export default {
       tab: 'info',
       openDialog: false,
       openDialogCareer: false,
-      openDialogEducation: false
+      openDialogEducation: false,
+      dialogCover: false,
     }
   },
   computed: {
@@ -121,17 +130,20 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('profile/getProfile')
+    this.loadProfile()
   },
   methods: {
+    loadProfile () {
+      this.$store.dispatch('profile/getProfile')
+    },
     postInfo () {
       this.openDialog = !this.openDialog
     },
     postCareer () {
-      this.openDialogCareer = true
+      this.openDialogCareer = !this.openDialogCareer
     },
     postEducation () {
-      this.openDialogEducation = true
+      this.openDialogEducation = !this.openDialogEducation
     },
     onChildDialogVal (val) {
       this.openDialog = val
@@ -141,6 +153,17 @@ export default {
     },
     onChildEducationVal (val) {
       this.openDialogEducation = val
+    },
+    async factoryFnCover (files) {
+      try {
+        let formData = new FormData()
+        formData.append('image', files[0])
+        const response = await uploadService.uploadCoverService(formData)
+        this.loadProfile()
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }
