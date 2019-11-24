@@ -16,3 +16,17 @@ export async function getProfileService () {
     throw err
   }
 }
+
+export async function updateProfileService (data) {
+  try {
+    const response = await axiosInstance.post('/api/v1/profile', data)
+    return response
+  } catch (err) {
+    Notify.create({
+      message: err.data.error.errors[0],
+      icon: 'warning',
+      color: 'red'
+    })
+    throw err
+  }
+}

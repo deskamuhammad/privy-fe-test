@@ -12,3 +12,15 @@ export function getProfile ({ commit }) {
       throw err
     })
 }
+
+export function updateProfile ({ commit }, data) {
+  commit('UPDATE_PROFILE_REQUEST')
+  return ProfileService.updateProfileService(data)
+    .then(response => {
+      commit('UPDATE_PROFILE_SUCCESS', response)
+    })
+    .catch(err => {
+      commit('UPDATE_PROFILE_FAILURE')
+      throw err
+    })
+}

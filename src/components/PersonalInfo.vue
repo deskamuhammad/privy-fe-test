@@ -33,6 +33,13 @@
       <q-item clickable v-ripple>
         <q-item-section>
           <div class="text-caption text-weight-bold">Hometown</div>
+          <div class="text-subtitle1 text-weight-light">{{ profile.hometown }}</div>
+        </q-item-section>
+      </q-item>
+      <q-separator />
+      <q-item clickable v-ripple>
+        <q-item-section>
+          <div class="text-caption text-weight-bold">Latlong</div>
           <div class="text-subtitle1 text-weight-light">{{ profile.latlong }}</div>
         </q-item-section>
       </q-item>

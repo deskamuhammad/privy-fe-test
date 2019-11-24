@@ -46,7 +46,7 @@ module.exports = function (ctx) {
       all: 'auto',
 
       components: [],
-      directives: [],
+      directives: ['ClosePopup'],
 
       // Quasar plugins
       plugins: ['Notify', 'LoadingBar', 'Dialog', 'Cookies', 'QTabs', 'QTab', 'QRouteTab', 'QParallax', 'QTabPanels', 'QTabPanel', 'QTooltip'],
