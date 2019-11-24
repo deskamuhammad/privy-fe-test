@@ -15,57 +15,32 @@
         </q-btn>
       </q-bar>
       <q-card-section v-if="data">
-         <div class="text-h6">Update Personal Info</div>
+        <div class="text-h6">Update Education</div>
         <q-form class="q-gutter-md" @submit="onSubmit">
           <q-input
-            v-model="data.name"
-            label="Name *"
+            v-model="data.school_name"
+            label="School Name *"
             lazy-rules
             :rules="[
               val => (val && val.length > 0) || '* Required',
             ]"
           >
             <template v-slot:before>
-              <q-icon name="person" />
+              <q-icon name="home_work" />
             </template>
           </q-input>
-          <q-select color="purple-12" v-model="data.gender" :options="options" label="Gender">
-            <template v-slot:before>
-              <q-icon name="accessibility" />
-            </template>
-          </q-select>
           <q-input
-            v-model="data.birthday"
-            label="Birthday *"
+            v-model="data.graduation_time"
+            label="Graduation Time *"
             lazy-rules
             :rules="[val => (val && val.length > 0) || '* Required']"
             mask="date">
             <template v-slot:before>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="data.birthday" @input="() => $refs.qDateProxy.hide()" />
+                  <q-date v-model="data.graduation_time" @input="() => $refs.qDateProxy.hide()" />
                 </q-popup-proxy>
               </q-icon>
-            </template>
-          </q-input>
-          <q-input
-            v-model="data.hometown"
-            label="Hometown *"
-            lazy-rules
-            :rules="[val => (val && val.length > 0) || '* Required']"
-          >
-            <template v-slot:before>
-              <q-icon name="place" />
-            </template>
-          </q-input>
-          <q-input
-            v-model="data.bio"
-            label="Bio *"
-            lazy-rules
-            :rules="[val => (val && val.length > 0) || '* Required']"
-          >
-            <template v-slot:before>
-              <q-icon name="assignment" />
             </template>
           </q-input>
           <div align="right">
@@ -78,12 +53,11 @@
 </template>
 
 <script>
-// import moment from 'moment'
 export default {
-  name: 'PostInfoDialog',
+  name: 'PostEducationDialog',
   props: {
-    openDialog: {
-      required: false,
+    openDialogEducation: {
+      required: true,
       type: Boolean
     },
     profile: {
@@ -93,39 +67,32 @@ export default {
   },
   data () {
     return {
-      options: ['Male', 'Female'],
+      dialog: false,
       maximizedToggle: true,
-      open: this.openDialog
-    }
-  },
-
-  computed: {
-    data: {
-      get: function () {
-        return Object.assign({}, this.profile)
-      }
+      data: Object.assign({}, this.profile.education),
+      open: this.openDialogEducation
     }
   },
   watch: {
-    openDialog (newVal, oldVal) {
+    openDialogEducation (newVal, oldVal) {
       this.open = newVal
     }
   },
   methods: {
     onSubmit () {
-      this.data.gender = this.profile.gender === 'Male' ? 0 : 1
-      this.$store.dispatch('profile/updateProfile', this.data)
+      console.log(this.data)
+      this.$store.dispatch('profile/updateEducation', this.data)
         .then(() => {
           this.$q.notify({
-            message: 'Update profile success',
+            message: 'Update education success',
             icon: 'check',
             color: 'green'
           })
-          this.$emit('childInfoDialog', false)
+          this.$emit('childEducationDialog', false)
         })
     },
     close (event) {
-      this.$emit('childInfoDialog', false)
+      this.$emit('childEducationDialog', false)
     }
   }
 }

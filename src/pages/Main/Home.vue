@@ -76,11 +76,13 @@
           color="accent"
         >
           <q-fab-action @click="postInfo" color="primary" icon="person_add" />
-          <q-fab-action @click="postInfo" color="primary" icon="work_outline" />
-          <q-fab-action @click="postInfo" color="primary" icon="menu_book" />
+          <q-fab-action @click="postCareer" color="primary" icon="work_outline" />
+          <q-fab-action @click="postEducation" color="primary" icon="menu_book" />
         </q-fab>
       </q-page-sticky>
-      <post-info-dialog :openDialog="openDialog" :profile="profile"></post-info-dialog>
+      <post-info-dialog :openDialog="openDialog" :profile="profile" v-on:childInfoDialog="onChildDialogVal"></post-info-dialog>
+      <post-career-dialog :openDialogCareer="openDialogCareer" :profile="profile" v-on:childCareerDialog="onChildCareerVal"></post-career-dialog>
+      <post-education-dialog :openDialogEducation="openDialogEducation" :profile="profile" v-on:childEducationDialog="onChildEducationVal"></post-education-dialog>
     </div>
   </q-page>
 </template>
@@ -90,6 +92,8 @@ import PersonalInfo from '../../components/PersonalInfo'
 import CareerInfo from '../../components/CareerInfo'
 import EducationInfo from '../../components/EducationInfo'
 import PostInfoDialog from '../../components/PostInfoDialog'
+import PostCareerDialog from '../../components/PostCareerDialog'
+import PostEducationDialog from '../../components/PostEducationDialog'
 
 export default {
   name: 'PageHome',
@@ -97,12 +101,16 @@ export default {
     PersonalInfo,
     CareerInfo,
     EducationInfo,
-    PostInfoDialog
+    PostInfoDialog,
+    PostCareerDialog,
+    PostEducationDialog
   },
   data () {
     return {
       tab: 'info',
-      openDialog: false
+      openDialog: false,
+      openDialogCareer: false,
+      openDialogEducation: false
     }
   },
   computed: {
@@ -117,7 +125,22 @@ export default {
   },
   methods: {
     postInfo () {
-      this.openDialog = true
+      this.openDialog = !this.openDialog
+    },
+    postCareer () {
+      this.openDialogCareer = true
+    },
+    postEducation () {
+      this.openDialogEducation = true
+    },
+    onChildDialogVal (val) {
+      this.openDialog = val
+    },
+    onChildCareerVal (val) {
+      this.openDialogCareer = val
+    },
+    onChildEducationVal (val) {
+      this.openDialogEducation = val
     }
   }
 }

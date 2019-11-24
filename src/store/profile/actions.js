@@ -24,3 +24,27 @@ export function updateProfile ({ commit }, data) {
       throw err
     })
 }
+
+export function updateCareer ({ commit }, data) {
+  commit('UPDATE_CAREER_REQUEST')
+  return ProfileService.updateCareerService(data)
+    .then(response => {
+      commit('UPDATE_CAREER_SUCCESS', response)
+    })
+    .catch(err => {
+      commit('UPDATE_CAREER_FAILURE')
+      throw err
+    })
+}
+
+export function updateEducation ({ commit }, data) {
+  commit('UPDATE_EDUCATION_REQUEST')
+  return ProfileService.updateEducationService(data)
+    .then(response => {
+      commit('UPDATE_EDUCATION_SUCCESS', response)
+    })
+    .catch(err => {
+      commit('UPDATE_EDUCATION_FAILURE')
+      throw err
+    })
+}

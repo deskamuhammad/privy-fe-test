@@ -15,57 +15,58 @@
         </q-btn>
       </q-bar>
       <q-card-section v-if="data">
-         <div class="text-h6">Update Personal Info</div>
+        <div class="text-h6">Update Career</div>
         <q-form class="q-gutter-md" @submit="onSubmit">
           <q-input
-            v-model="data.name"
-            label="Name *"
+            v-model="data.position"
+            label="Position *"
             lazy-rules
             :rules="[
               val => (val && val.length > 0) || '* Required',
             ]"
           >
             <template v-slot:before>
-              <q-icon name="person" />
+              <q-icon name="work_outline" />
             </template>
           </q-input>
-          <q-select color="purple-12" v-model="data.gender" :options="options" label="Gender">
-            <template v-slot:before>
-              <q-icon name="accessibility" />
-            </template>
-          </q-select>
           <q-input
-            v-model="data.birthday"
-            label="Birthday *"
+            v-model="data.company_name"
+            label="Company Name *"
+            lazy-rules
+            :rules="[
+              val => (val && val.length > 0) || '* Required',
+            ]"
+          >
+            <template v-slot:before>
+              <q-icon name="home_work" />
+            </template>
+          </q-input>
+          <q-input
+            v-model="data.starting_from"
+            label="Start Date *"
             lazy-rules
             :rules="[val => (val && val.length > 0) || '* Required']"
             mask="date">
             <template v-slot:before>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="data.birthday" @input="() => $refs.qDateProxy.hide()" />
+                  <q-date v-model="data.starting_from" @input="() => $refs.qDateProxy.hide()" />
                 </q-popup-proxy>
               </q-icon>
             </template>
           </q-input>
           <q-input
-            v-model="data.hometown"
-            label="Hometown *"
+            v-model="data.ending_in"
+            label="End Date *"
             lazy-rules
             :rules="[val => (val && val.length > 0) || '* Required']"
-          >
+            mask="date">
             <template v-slot:before>
-              <q-icon name="place" />
-            </template>
-          </q-input>
-          <q-input
-            v-model="data.bio"
-            label="Bio *"
-            lazy-rules
-            :rules="[val => (val && val.length > 0) || '* Required']"
-          >
-            <template v-slot:before>
-              <q-icon name="assignment" />
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                  <q-date v-model="data.ending_in" @input="() => $refs.qDateProxy.hide()" />
+                </q-popup-proxy>
+              </q-icon>
             </template>
           </q-input>
           <div align="right">
@@ -78,12 +79,11 @@
 </template>
 
 <script>
-// import moment from 'moment'
 export default {
-  name: 'PostInfoDialog',
+  name: 'PostCareerialog',
   props: {
-    openDialog: {
-      required: false,
+    openDialogCareer: {
+      required: true,
       type: Boolean
     },
     profile: {
@@ -93,39 +93,32 @@ export default {
   },
   data () {
     return {
-      options: ['Male', 'Female'],
+      dialog: false,
       maximizedToggle: true,
-      open: this.openDialog
-    }
-  },
-
-  computed: {
-    data: {
-      get: function () {
-        return Object.assign({}, this.profile)
-      }
+      data: Object.assign({}, this.profile.career),
+      open: this.openDialogCareer
     }
   },
   watch: {
-    openDialog (newVal, oldVal) {
+    openDialogCareer (newVal, oldVal) {
       this.open = newVal
     }
   },
   methods: {
     onSubmit () {
-      this.data.gender = this.profile.gender === 'Male' ? 0 : 1
-      this.$store.dispatch('profile/updateProfile', this.data)
+      console.log(this.data)
+      this.$store.dispatch('profile/updateCareer', this.data)
         .then(() => {
           this.$q.notify({
-            message: 'Update profile success',
+            message: 'Update career success',
             icon: 'check',
             color: 'green'
           })
-          this.$emit('childInfoDialog', false)
+          this.$emit('childCareerDialog', false)
         })
     },
     close (event) {
-      this.$emit('childInfoDialog', false)
+      this.$emit('childCareerDialog', false)
     }
   }
 }

@@ -30,3 +30,31 @@ export async function updateProfileService (data) {
     throw err
   }
 }
+
+export async function updateCareerService (data) {
+  try {
+    const response = await axiosInstance.post('/api/v1/profile/career', data)
+    return response
+  } catch (err) {
+    Notify.create({
+      message: err.data.error.errors[0],
+      icon: 'warning',
+      color: 'red'
+    })
+    throw err
+  }
+}
+
+export async function updateEducationService (data) {
+  try {
+    const response = await axiosInstance.post('/api/v1/profile/education', data)
+    return response
+  } catch (err) {
+    Notify.create({
+      message: err.data.error.errors[0],
+      icon: 'warning',
+      color: 'red'
+    })
+    throw err
+  }
+}
