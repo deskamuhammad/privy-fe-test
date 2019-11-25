@@ -103,13 +103,13 @@
           <q-fab-action @click="postInfo" color="primary" icon="person_add" />
           <q-fab-action @click="postCareer" color="primary" icon="work_outline" />
           <q-fab-action @click="postEducation" color="primary" icon="menu_book" />
-          <q-fab-action @click="message" color="secondary" icon="message" />
+          <q-fab-action @click="message" color="warning" icon="message" />
         </q-fab>
       </q-page-sticky>
       <post-info-dialog :openDialog="openDialog" :profile="profile" v-on:childInfoDialog="onChildDialogVal"></post-info-dialog>
       <post-career-dialog :openDialogCareer="openDialogCareer" :profile="profile" v-on:childCareerDialog="onChildCareerVal"></post-career-dialog>
       <post-education-dialog :openDialogEducation="openDialogEducation" :profile="profile" v-on:childEducationDialog="onChildEducationVal"></post-education-dialog>
-      <message-board ></message-board>
+      <message-board :openMessageBoard="openMessageBoard" v-on:childMessageBoard="onMessageBoard"></message-board>
     </div>
   </q-page>
 </template>
@@ -121,9 +121,9 @@ import EducationInfo from '../../components/EducationInfo'
 import PostInfoDialog from '../../components/PostInfoDialog'
 import PostCareerDialog from '../../components/PostCareerDialog'
 import PostEducationDialog from '../../components/PostEducationDialog'
-import MessageBoard from '../../components/MessageBoard'
 import * as uploadService from '../../service/UploadService'
 import ProfileImages from '../../components/ProfileImages'
+import MessageBoard from '../../components/MessageBoard'
 
 export default {
   name: 'PageHome',
@@ -134,7 +134,8 @@ export default {
     PostInfoDialog,
     PostCareerDialog,
     PostEducationDialog,
-    ProfileImages
+    ProfileImages,
+    MessageBoard
   },
   data () {
     return {
@@ -143,7 +144,8 @@ export default {
       openDialogCareer: false,
       openDialogEducation: false,
       dialogCover: false,
-      dialogPropic: false
+      dialogPropic: false,
+      openMessageBoard: false
     }
   },
   computed: {
@@ -205,6 +207,9 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    onMessageBoard (val) {
+      this.openMessageBoard = val
     }
   }
 }
