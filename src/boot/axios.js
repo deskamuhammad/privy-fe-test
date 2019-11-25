@@ -21,7 +21,7 @@ export default function ({ Vue, store, ssrContext, router }) {
       }]
 
       if (cookies.has('tokenAccess')) {
-        // config.headers.Authorization = `Bearer ${cookies.get('tokenAccess')}`
+        config.headers.Authorization = `Bearer ${cookies.get('tokenAccess')}`
       }
       return config
     }, error => {
