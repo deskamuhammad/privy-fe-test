@@ -1,11 +1,17 @@
 
 const routes = [
   {
+    path: '*',
+    redirect: {
+      name: 'login'
+    }
+  },
+  {
     path: '/',
     component: () => import('layouts/AuthLayout'),
     children: [
       {
-        path: '',
+        path: '/register',
         name: 'register',
         component: () => import('pages/Auth/Register')
       },
@@ -15,7 +21,7 @@ const routes = [
         component: () => import('pages/Auth/Otp')
       },
       {
-        path: '/login',
+        path: '/',
         name: 'login',
         component: () => import('pages/Auth/Login')
       }
@@ -28,7 +34,11 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: () => import('pages/Main/Home') }
+        component: () => import('pages/Main/Home'),
+        meta: {
+          requiresAuth: true
+        }
+      }
     ]
   }
 ]

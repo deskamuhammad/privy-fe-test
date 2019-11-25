@@ -13,6 +13,7 @@ export const OTP_REQUEST = (state, data) => {
 }
 export const OTP_SUCCESS = (state, response) => {
   state.otp = response.data.user
+  state.isLoggedIn = true
 }
 export const OTP_FAILURE = (state) => {
   state.otp = null
@@ -33,6 +34,7 @@ export const LOGIN_REQUEST = (state, data) => {
 }
 export const LOGIN_SUCCESS = (state, response) => {
   state.token = response.data.user
+  state.isLoggedIn = true
 }
 export const LOGIN_FAILURE = (state) => {
   state.user = null

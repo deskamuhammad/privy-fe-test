@@ -8,5 +8,6 @@ export default {
     device_type: 2
   },
   otp: null,
-  token: null
+  token: null,
+  isLoggendIn: false
 }
