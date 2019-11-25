@@ -104,6 +104,7 @@
           <q-fab-action @click="postCareer" color="primary" icon="work_outline" />
           <q-fab-action @click="postEducation" color="primary" icon="menu_book" />
           <q-fab-action @click="message" color="warning" icon="message" />
+          <q-fab-action @click="logout" color="negative" icon="power_settings_new" />
         </q-fab>
       </q-page-sticky>
       <post-info-dialog :openDialog="openDialog" :profile="profile" v-on:childInfoDialog="onChildDialogVal"></post-info-dialog>
@@ -210,6 +211,13 @@ export default {
     },
     onMessageBoard (val) {
       this.openMessageBoard = val
+    },
+    logout () {
+      this.$store.dispatch('auth/logout')
+        .then(() => {
+          this.$q.cookies.remove('tokenAccess')
+          this.$router.push('/')
+        })
     }
   }
 }

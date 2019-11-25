@@ -39,3 +39,7 @@ export const LOGIN_SUCCESS = (state, response) => {
 export const LOGIN_FAILURE = (state) => {
   state.user = null
 }
+
+export const LOGOUT = (state) => {
+  state.isLoggedIn = null
+}

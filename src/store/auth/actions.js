@@ -46,3 +46,7 @@ export function login ({ commit }, data) {
       throw err
     })
 }
+
+export function logout ({ commit }) {
+  commit('LOGOUT')
+}
