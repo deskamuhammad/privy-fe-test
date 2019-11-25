@@ -58,25 +58,24 @@
               </q-dialog>
             </q-avatar>
             <div class="q-mt-md text-h3 text-primary text-center">{{ profile.name }}</div>
+            <q-card class="q-pa-lg detail-card">
+              <q-tabs
+                v-model="tab"
+                dense
+                class="text-grey"
+                indicator-color="primary"
+                align="justify"
+              >
+                <q-tab name="info" label="Personal Info" />
+                <q-tab name="career" label="Career" />
+                <q-tab name="education" label="Education" />
+                <q-tab name="photos" label="Photos" />
+              </q-tabs>
+            </q-card>
           </div>
         </template>
       </q-parallax>
       <div class="detail flex flex-center">
-        <q-card class="q-pa-lg detail-card">
-          <q-tabs
-            v-model="tab"
-            dense
-            class="text-grey"
-            indicator-color="primary"
-            align="justify"
-          >
-            <q-tab name="info" label="Personal Info" />
-            <q-tab name="career" label="Career" />
-            <q-tab name="education" label="Education" />
-            <q-tab name="photos" label="Photos" />
-          </q-tabs>
-        </q-card>
-
         <q-tab-panels v-model="tab" animated class="q-mt-md">
           <q-tab-panel name="info">
             <personal-info></personal-info>
