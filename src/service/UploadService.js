@@ -22,3 +22,11 @@ export async function uploadProfileService (formData) {
     }
   )
 }
+
+export async function setProfileService (data) {
+  return axiosInstance.post('/api/v1/uploads/profile/default', data)
+}
+
+export async function deleteProfileService (params) {
+  return axiosInstance.delete('/api/v1/uploads/profile/default/', { params })
+}

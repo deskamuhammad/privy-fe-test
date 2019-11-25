@@ -35,7 +35,7 @@
               right: 0
             }"
           >
-            <q-avatar size="150px">
+            <q-avatar size="150px" color="white">
               <img v-bind:src="profile.user_picture.picture.url ? profile.user_picture.picture.url : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSfx2lz0ccO8_grKnVibu_ISa6vIZ4cXk02Ld7eoZ3fSMDbGtVV'">
               <q-btn class="absolute-top-right" color="grey" round glossy unelevated icon="camera_enhance" @click="dialogPropic = true"/>
               <q-dialog v-model="dialogPropic">
@@ -58,27 +58,26 @@
               </q-dialog>
             </q-avatar>
             <div class="q-mt-md text-h3 text-primary text-center">{{ profile.name }}</div>
-            <div class="flex flex-center">
-              <q-card class="q-pa-lg detail-card">
-                <q-tabs
-                  v-model="tab"
-                  dense
-                  class="text-grey"
-                  indicator-color="primary"
-                  align="justify"
-                >
-                  <q-tab name="info" label="Personal Info" />
-                  <q-tab name="career" label="Career" />
-                  <q-tab name="education" label="Education" />
-                  <q-tab name="photos" label="Photos" />
-                </q-tabs>
-              </q-card>
-            </div>
           </div>
         </template>
       </q-parallax>
       <div class="detail flex flex-center">
-        <q-tab-panels v-model="tab" animated>
+        <q-card class="q-pa-lg detail-card">
+          <q-tabs
+            v-model="tab"
+            dense
+            class="text-grey"
+            indicator-color="primary"
+            align="justify"
+          >
+            <q-tab name="info" label="Personal Info" />
+            <q-tab name="career" label="Career" />
+            <q-tab name="education" label="Education" />
+            <q-tab name="photos" label="Photos" />
+          </q-tabs>
+        </q-card>
+
+        <q-tab-panels v-model="tab" animated class="q-mt-md">
           <q-tab-panel name="info">
             <personal-info></personal-info>
           </q-tab-panel>
@@ -91,7 +90,7 @@
             <education-info></education-info>
           </q-tab-panel>
           <q-tab-panel name="photos">
-
+            <profile-images v-on:loadProfileChild="loadProfile"></profile-images>
           </q-tab-panel>
         </q-tab-panels>
       </div>
@@ -104,11 +103,13 @@
           <q-fab-action @click="postInfo" color="primary" icon="person_add" />
           <q-fab-action @click="postCareer" color="primary" icon="work_outline" />
           <q-fab-action @click="postEducation" color="primary" icon="menu_book" />
+          <q-fab-action @click="message" color="secondary" icon="message" />
         </q-fab>
       </q-page-sticky>
       <post-info-dialog :openDialog="openDialog" :profile="profile" v-on:childInfoDialog="onChildDialogVal"></post-info-dialog>
       <post-career-dialog :openDialogCareer="openDialogCareer" :profile="profile" v-on:childCareerDialog="onChildCareerVal"></post-career-dialog>
       <post-education-dialog :openDialogEducation="openDialogEducation" :profile="profile" v-on:childEducationDialog="onChildEducationVal"></post-education-dialog>
+      <message-board ></message-board>
     </div>
   </q-page>
 </template>
@@ -120,7 +121,9 @@ import EducationInfo from '../../components/EducationInfo'
 import PostInfoDialog from '../../components/PostInfoDialog'
 import PostCareerDialog from '../../components/PostCareerDialog'
 import PostEducationDialog from '../../components/PostEducationDialog'
+import MessageBoard from '../../components/MessageBoard'
 import * as uploadService from '../../service/UploadService'
+import ProfileImages from '../../components/ProfileImages'
 
 export default {
   name: 'PageHome',
@@ -130,7 +133,8 @@ export default {
     EducationInfo,
     PostInfoDialog,
     PostCareerDialog,
-    PostEducationDialog
+    PostEducationDialog,
+    ProfileImages
   },
   data () {
     return {
@@ -174,6 +178,9 @@ export default {
     onChildEducationVal (val) {
       this.openDialogEducation = val
     },
+    message () {
+      this.openMessageBoard = !this.openMessageBoard
+    },
     async factoryFnCover (files) {
       try {
         let formData = new FormData()
@@ -212,7 +219,7 @@ export default {
 .detail{
   margin-top: 20px;
   .q-tab-panels{
-     width: 800px;
+     width: 600px;
   }
 
 }
