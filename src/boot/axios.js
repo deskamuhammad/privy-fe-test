@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
   baseURL: '/'
 })
 
-export default function ({ Vue, store, ssrContext }) {
+export default function ({ Vue, store, ssrContext, router }) {
   // request interceptor
   axiosInstance.interceptors.request.use(
     config => {
@@ -21,7 +21,7 @@ export default function ({ Vue, store, ssrContext }) {
       }]
 
       if (cookies.has('tokenAccess')) {
-        config.headers.Authorization = `Bearer ${cookies.get('tokenAccess')}`
+        // config.headers.Authorization = `Bearer ${cookies.get('tokenAccess')}`
       }
       return config
     }, error => {
@@ -32,6 +32,9 @@ export default function ({ Vue, store, ssrContext }) {
   axiosInstance.interceptors.response.use(
     response => response.data,
     error => {
+      if (error.response.status === 401) {
+        router.push('/')
+      }
       console.log('err' + error) // for debug
       return Promise.reject(error.response)
     }
